@@ -1,0 +1,27 @@
+# Poetry로 관리되는 프로젝트 의존성
+[tool.poetry]
+name = "주식 분석 크루AI"
+version = "0.1.0"
+description = "21세기 최고 지능의 AI가 협력하는 주식 분석 솔루션"
+authors = ["진짜", "AI"]
+
+[tool.poetry.dependencies]
+python = ">=3.10.0,<3.13"
+crewai = {version = "0.41.1", extras = ["crewai-tool"]}
+unstructured = '==0.10.25'
+pyowm = '3.3.0'
+python-dotenv = "1.0.0"
+langchain-openai = "^0.1.20"
+matplotlib = "^3.3.4"
+
+[tool.pyright]
+useLibraryCodeForTypes = true
+exclude = [".cache"]
+
+[tool.ruff]
+select = ['E', 'W', 'F', 'I', 'B', 'C4', 'ARG', 'SIM']
+ignore = ['W291', 'W292', 'W293']
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
