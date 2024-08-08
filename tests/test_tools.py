@@ -9,14 +9,15 @@ from tools.browser_tools import BrowserTools
 
 class TestBrowserTools(unittest.TestCase):
     def test_scrape_website(self):
-        url = "https://m.blog.naver.com/jang1543/223416520251"
+        url = "https://donofan.org/?p=99"
         result = BrowserTools.scrape_website(url)
         self.assertIsInstance(result, str)
         self.assertGreater(len(result), 0)
         print(result)
 
     def test_summarize_text(self):
-        text = "Your long text here..."
+        url = "https://donofan.org/?p=99"
+        text = BrowserTools.scrape_website(url)  # 스크래핑한 텍스트 사용
         result = BrowserTools.summarize_text(text)
         self.assertIsInstance(result, str)
         self.assertGreater(len(result), 0)

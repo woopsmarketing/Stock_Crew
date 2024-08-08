@@ -23,13 +23,19 @@ class BrowserTools():
     @tool("텍스트 요약")
     def summarize_text(text):
         """
-        주어진 텍스트를 요약합니다.
+        주어진 텍스트를 요약합니다. 텍스트가 길면 모델이 처리할 수 있는 길이로 나누어 처리합니다.
         """
         summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
-        if len(text) < 130:
-            max_length = len(text)
-        else:
-            max_length = 130
+        max_chunk_length = 1024  # 모델이 처리할 수 있는 최대 토큰 길이
 
-        summary = summarizer(text, max_length=max_length, min_length=30, do_sample=False)
-        return summary[0]['summary_text']
+        # 텍스트를 모델이 처리할 수 있는 길이로 나누기
+        chunks = [text[i:i+max_chunk_length] for i in range(0, len(text), max_chunk_length)]
+
+        summaries = []
+        for chunk in chunks:
+            summary = summarizer(chunk, max_length=130, min_length=30, do_sample=False)
+            summaries.append(summary[0]['summary_text'])
+
+        # 나누어진 요약본들을 합쳐서 최종 요약본 생성
+        final_summary = ' '.join(summaries)
+        return final_summary
